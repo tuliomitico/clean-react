@@ -1,4 +1,4 @@
-import love from "eslint-config-love";
+import love from "eslint-config-love"
 
 export default [
   {
