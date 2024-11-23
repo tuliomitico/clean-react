@@ -1,8 +1,15 @@
-import love from "eslint-config-love"
+import love from "eslint-config-love";
 
+/** @type {import('eslint').Linter.Config[]} */
 export default [
+  { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
+  love,
   {
-    ...love,
+    languageOptions: {
+      parserOptions: {
+        project: "./tsconfig-eslint.json",
+      },
+    },
     rules: {
       "@typescript-eslint/strict-boolean-expressions": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
