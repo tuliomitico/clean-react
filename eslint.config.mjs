@@ -1,4 +1,5 @@
 import love from "eslint-config-love";
+import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -16,4 +17,5 @@ export default [
     },
     ignores: ["node_modules", "dist", "coverage", "build", ".vscode"],
   },
+  eslintPluginPrettier,
 ];
