@@ -14,7 +14,8 @@ export default [
     rules: {
       "@typescript-eslint/strict-boolean-expressions": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
-      "@typescript-eslint/class-methods-use-this": "off"
+      "@typescript-eslint/class-methods-use-this": "off",
+      "@typescript-eslint/unbound-method": "off",
     },
     ignores: ["node_modules", "dist", "coverage", "build", ".vscode"],
   },
