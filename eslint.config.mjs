@@ -16,6 +16,7 @@ export default [
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/class-methods-use-this": "off",
       "@typescript-eslint/unbound-method": "off",
+      "@typescript-eslint/no-magic-numbers": "off",
     },
     ignores: ["node_modules", "dist", "coverage", "build", ".vscode"],
   },
