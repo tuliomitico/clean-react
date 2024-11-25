@@ -1,7 +1,7 @@
 import type { HttpResponse } from ".";
 
 export type HttpPostParams<T> = {
-  url?: string;
+  url: string;
   body?: T;
 };
 
