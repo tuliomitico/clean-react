@@ -21,11 +21,12 @@ export default [
       "@typescript-eslint/class-methods-use-this": "off",
       "@typescript-eslint/unbound-method": "off",
       "@typescript-eslint/no-magic-numbers": "off",
+      "@typescript-eslint/triple-slash-reference": "off",
       "react/jsx-uses-react": "error",
       "react/jsx-uses-vars": "error",
     },
     ignores: ["node_modules", "dist", "coverage", "build", ".vscode"],
   },
-  reactPlugin.configs.recommended,
+  reactPlugin.configs.flat.recommended,
   eslintPluginPrettier,
 ];
