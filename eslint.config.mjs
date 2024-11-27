@@ -28,6 +28,14 @@ export default [
       "react/jsx-uses-vars": "error",
       "react/react-in-jsx-scope": "off",
     },
-    ignores: ["node_modules", "dist", "coverage", "build", ".vscode"],
+    ignores: [
+      "node_modules",
+      "dist",
+      "coverage",
+      "build",
+      ".vscode",
+      "public",
+      "*.scss",
+    ],
   },
 ];
