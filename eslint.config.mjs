@@ -6,6 +6,8 @@ import reactPlugin from "eslint-plugin-react";
 export default [
   { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
   love,
+  reactPlugin.configs.flat.recommended,
+  eslintPluginPrettier,
   {
     settings: {
       react: { version: "detect" },
@@ -24,9 +26,8 @@ export default [
       "@typescript-eslint/triple-slash-reference": "off",
       "react/jsx-uses-react": "error",
       "react/jsx-uses-vars": "error",
+      "react/react-in-jsx-scope": "off",
     },
     ignores: ["node_modules", "dist", "coverage", "build", ".vscode"],
   },
-  reactPlugin.configs.flat.recommended,
-  eslintPluginPrettier,
 ];
