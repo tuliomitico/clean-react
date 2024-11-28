@@ -1,6 +1,6 @@
 import React from "react";
 import Styles from "./login.module.scss";
-import { Logo } from "@/presentation/components/icons/logo/logo";
+import { Logo } from "@/presentation/components/logo/logo";
 import { Spinner } from "@/presentation/components/spinner/spinner";
 
 export function Login(): React.JSX.Element {
