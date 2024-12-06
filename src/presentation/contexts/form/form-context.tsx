@@ -1,6 +1,10 @@
 import { createContext } from "react";
 
 export default createContext<{
-  isLoading: boolean;
-  errorMessage: string;
+  state: { isLoading: boolean };
+  errorState: {
+    email: string;
+    password: string;
+    main: string;
+  };
 } | null>(null);
