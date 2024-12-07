@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { type PropsWithoutRef, useEffect, useState } from "react";
 import Styles from "./login.module.scss";
 import {
   LoginHeader,
@@ -7,20 +7,29 @@ import {
   FormStatus,
 } from "@/presentation/components";
 import Context from "@/presentation/contexts/form/form-context";
+import type { Validation } from "@/presentation/protocols/validation";
 
-export function Login(): React.JSX.Element {
-  const [state] = useState({
+type Props = {
+  validation?: Validation;
+};
+export function Login({
+  validation,
+}: PropsWithoutRef<Props>): React.JSX.Element {
+  const [state, setState] = useState({
     isLoading: false,
+    email: "",
+    emailError: "Campo obrigatório",
+    passwordError: "Campo obrigatório",
+    mainError: "",
   });
-  const [errorState] = useState({
-    email: "Campo obrigatório",
-    password: "Campo obrigatório",
-    main: "",
-  });
+  useEffect(() => {
+    validation?.validate({ email: state.email });
+  }, [state.email]);
+
   return (
     <div className={Styles.login}>
       <LoginHeader />
-      <Context.Provider value={{ state, errorState }}>
+      <Context.Provider value={{ state, setState }}>
         <form className={Styles.form}>
           <h2>Login</h2>
           <Input

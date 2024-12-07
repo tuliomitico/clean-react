@@ -9,15 +9,25 @@ type Props = React.DetailedHTMLProps<
 
 export function Input(props: PropsWithoutRef<Props>): React.JSX.Element {
   const { name } = props;
-  const { errorState } = useContext(Context) as {
-    state: { isLoading: boolean };
-    errorState: {
+  const { state, setState } = useContext(Context) as {
+    state: {
+      isLoading: boolean;
       email: string;
-      password: string;
-      main: string;
+      emailError: string;
+      passwordError: string;
+      mainError: string;
     };
+    setState: React.Dispatch<
+      React.SetStateAction<{
+        isLoading: boolean;
+        email: string;
+        emailError: string;
+        passwordError: string;
+        mainError: string;
+      }>
+    >;
   };
-  const { [name as "email" | "password"]: error } = errorState;
+  const { [`${name}Error` as "emailError" | "passwordError"]: error } = state;
   const enableInput = (event: React.FocusEvent<HTMLInputElement>): void => {
     event.target.readOnly = false;
   };
@@ -27,9 +37,22 @@ export function Input(props: PropsWithoutRef<Props>): React.JSX.Element {
   const getTitle = (): string => {
     return error;
   };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setState({
+      ...state,
+      [event.target.name]: event.target.value,
+    });
+  };
   return (
     <div className={Styles.inputWrap}>
-      <input {...props} readOnly onFocus={enableInput} />
+      <input
+        {...props}
+        data-testid={props.name}
+        readOnly
+        onFocus={enableInput}
+        onChange={handleChange}
+      />
       <span
         data-testid={`${props.name}-status`}
         title={getTitle()}
