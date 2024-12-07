@@ -5,6 +5,7 @@ export default createContext<{
   state: {
     isLoading: boolean;
     email: string;
+    password: string;
     emailError: string;
     passwordError: string;
     mainError: string;
@@ -13,6 +14,7 @@ export default createContext<{
     React.SetStateAction<{
       isLoading: boolean;
       email: string;
+      password: string;
       emailError: string;
       passwordError: string;
       mainError: string;

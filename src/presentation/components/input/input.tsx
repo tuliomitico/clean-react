@@ -13,6 +13,7 @@ export function Input(props: PropsWithoutRef<Props>): React.JSX.Element {
     state: {
       isLoading: boolean;
       email: string;
+      password: string;
       emailError: string;
       passwordError: string;
       mainError: string;
@@ -21,6 +22,7 @@ export function Input(props: PropsWithoutRef<Props>): React.JSX.Element {
       React.SetStateAction<{
         isLoading: boolean;
         email: string;
+        password: string;
         emailError: string;
         passwordError: string;
         mainError: string;
