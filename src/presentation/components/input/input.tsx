@@ -34,10 +34,10 @@ export function Input(props: PropsWithoutRef<Props>): React.JSX.Element {
     event.target.readOnly = false;
   };
   const getStatus = (): string => {
-    return "🔴";
+    return error ? "🔴" : "🟢";
   };
   const getTitle = (): string => {
-    return error;
+    return error || "Tudo certo!";
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
