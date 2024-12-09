@@ -24,10 +24,10 @@ export function Login({
     mainError: "",
   });
   useEffect(() => {
-    validation?.validate({ email: state.email });
+    validation?.validate("email", state.email);
   }, [state.email]);
   useEffect(() => {
-    validation?.validate({ password: state.password });
+    validation?.validate("password", state.password);
   }, [state.password]);
   return (
     <div className={Styles.login}>
