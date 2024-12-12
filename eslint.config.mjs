@@ -24,6 +24,7 @@ export default [
       "@typescript-eslint/unbound-method": "off",
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/triple-slash-reference": "off",
+      "@typescript-eslint/no-misused-promises": "off",
       "react/jsx-uses-react": "error",
       "react/jsx-uses-vars": "error",
       "react/react-in-jsx-scope": "off",
