@@ -5,7 +5,11 @@ type Props = React.HTMLAttributes<HTMLElement>;
 
 export function Spinner(props: Props): React.JSX.Element {
   return (
-    <div {...props} className={[Styles.spinner, props.className].join(" ")}>
+    <div
+      {...props}
+      data-testid="spinner"
+      className={[Styles.spinner, props.className].join(" ")}
+    >
       <div />
       <div />
       <div />
