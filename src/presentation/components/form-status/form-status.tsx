@@ -16,7 +16,11 @@ export function FormStatus(): React.JSX.Element {
   return (
     <div data-testid="error-wrap" className={Styles.errorWrap}>
       {isLoading && <Spinner className={Styles.spinner} />}
-      {mainError && <span className={Styles.error}>Erro</span>}
+      {mainError && (
+        <span data-testid="main-error" className={Styles.error}>
+          {mainError}
+        </span>
+      )}
     </div>
   );
 }
