@@ -75,6 +75,7 @@ const simulateStatusForField = (
 
 describe("Login Component", () => {
   afterEach(cleanup);
+
   test("Should start with initial state", () => {
     const validationError = faker.lorem.words();
     const { sut } = makeSut({ validationError });
@@ -92,22 +93,26 @@ describe("Login Component", () => {
     populateEmailInput(sut);
     simulateStatusForField(sut, "email", validationError);
   });
+
   test("Should show password error if Validation fails", () => {
     const validationError = faker.lorem.words();
     const { sut } = makeSut({ validationError });
     populatePasswordInput(sut);
     simulateStatusForField(sut, "password", validationError);
   });
+
   test("Should show valid email state if Validation succeds", () => {
     const { sut } = makeSut();
     populateEmailInput(sut);
     simulateStatusForField(sut, "email");
   });
+
   test("Should show valid password state if Validation succeds", () => {
     const { sut } = makeSut();
     populatePasswordInput(sut);
     simulateStatusForField(sut, "password");
   });
+
   test("Should enable submit button if form is valid", () => {
     const { sut } = makeSut();
     populateEmailInput(sut);
@@ -115,12 +120,14 @@ describe("Login Component", () => {
     const submitButton = sut.getByTestId("submit") as HTMLButtonElement;
     expect(submitButton.disabled).toBe(false);
   });
+
   test("Should show spinner on loading", () => {
     const { sut } = makeSut();
     simulateValidSubmit(sut);
     const spinner = sut.getByTestId("spinner");
     expect(spinner).toBeTruthy();
   });
+
   test("Should call Authentication with correct values", () => {
     const { sut, authenticationSpy } = makeSut();
     const email = faker.internet.email();
@@ -128,10 +135,19 @@ describe("Login Component", () => {
     simulateValidSubmit(sut, email, password);
     expect(authenticationSpy.params).toEqual({ email, password });
   });
+
   test("Should call Authentication only once", () => {
     const { sut, authenticationSpy } = makeSut();
     simulateValidSubmit(sut);
     simulateValidSubmit(sut);
     expect(authenticationSpy.callsCount).toBe(1);
+  });
+
+  test("Should not call Authentication if form is invalid", () => {
+    const validationError = faker.lorem.words();
+    const { sut, authenticationSpy } = makeSut({ validationError });
+    populateEmailInput(sut);
+    fireEvent.submit(sut.getByTestId("form"));
+    expect(authenticationSpy.callsCount).toBe(0);
   });
 });
