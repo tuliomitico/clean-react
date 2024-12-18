@@ -6,6 +6,7 @@ import {
   cleanup,
   waitFor,
 } from "@testing-library/react";
+import "jest-localstorage-mock";
 import { Login } from "./login";
 import { faker } from "@faker-js/faker/.";
 import { ValidationStub } from "@/presentation/test";
@@ -77,6 +78,10 @@ const simulateStatusForField = (
 
 describe("Login Component", () => {
   afterEach(cleanup);
+
+  beforeEach(() => {
+    localStorage.clear();
+  });
 
   test("Should start with initial state", () => {
     const validationError = faker.lorem.words();
@@ -165,5 +170,16 @@ describe("Login Component", () => {
     const mainError = sut.getByTestId("main-error");
     expect(mainError.textContent).toBe(error.message);
     expect(errorWrap.childElementCount).toBe(1);
+  });
+
+  test("Should add accessToken on success", async () => {
+    const { sut, authenticationSpy } = makeSut();
+    simulateValidSubmit(sut);
+    await waitFor(() => sut.getByTestId("form"));
+
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      "accessToken",
+      authenticationSpy.account.accessToken,
+    );
   });
 });
