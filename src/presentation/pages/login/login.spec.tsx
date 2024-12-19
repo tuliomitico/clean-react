@@ -6,6 +6,11 @@ import {
   cleanup,
   waitFor,
 } from "@testing-library/react";
+import {
+  unstable_HistoryRouter as HistoryRouter,
+  type HistoryRouterProps,
+} from "react-router-dom";
+import { createMemoryHistory } from "history";
 import "jest-localstorage-mock";
 import { Login } from "./login";
 import { faker } from "@faker-js/faker/.";
@@ -22,12 +27,18 @@ type SutParams = {
   validationError: string;
 };
 
+const initialEntries = ["/", "/login"];
+const history = createMemoryHistory({ initialEntries });
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
   const authenticationSpy = new AuthenticationSpy();
   validationStub.errorMessage = params?.validationError ?? "";
   const sut = render(
-    <Login validation={validationStub} authentication={authenticationSpy} />,
+    <HistoryRouter
+      history={history as unknown as HistoryRouterProps["history"]}
+    >
+      <Login validation={validationStub} authentication={authenticationSpy} />,
+    </HistoryRouter>,
   );
   return {
     sut,
@@ -181,5 +192,15 @@ describe("Login Component", () => {
       "accessToken",
       authenticationSpy.account.accessToken,
     );
+  });
+
+  test("Should go to signup page", async () => {
+    const { sut } = makeSut();
+    const register = sut.getByTestId("signup");
+    fireEvent.click(register);
+    console.log(history);
+
+    expect(initialEntries.length).toBe(2);
+    expect(history.location.pathname).toBe("/signup");
   });
 });
