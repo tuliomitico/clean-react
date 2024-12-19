@@ -9,7 +9,7 @@ import {
 import Context from "@/presentation/contexts/form/form-context";
 import type { Validation } from "@/presentation/protocols/validation";
 import type { Authentication } from "@/domain/usecases";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 type Props = {
   validation?: Validation;
@@ -19,6 +19,7 @@ export function Login({
   validation,
   authentication,
 }: PropsWithoutRef<Props>): React.JSX.Element {
+  const history = useNavigate();
   const [state, setState] = useState({
     isLoading: false,
     email: "",
@@ -49,6 +50,7 @@ export function Login({
         password: state.password,
       });
       localStorage.setItem("accessToken", account?.accessToken ?? "");
+      await history("/", { replace: true });
     } catch (error) {
       setState({
         ...state,
