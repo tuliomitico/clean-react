@@ -1,12 +1,16 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Login } from "@/presentation/pages";
 
-export function Router(): React.JSX.Element {
+type Props = {
+  makeLogin: () => React.JSX.Element;
+};
+
+export function Router({ makeLogin }: Props): React.JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<h1>Home</h1>} />
+        <Route path="/login" element={makeLogin()} />
       </Routes>
     </BrowserRouter>
   );
