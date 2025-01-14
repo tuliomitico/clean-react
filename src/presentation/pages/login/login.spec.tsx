@@ -12,7 +12,7 @@ import {
 } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import "jest-localstorage-mock";
-import { Login } from "./login";
+import { Login } from "@/presentation/pages";
 import { faker } from "@faker-js/faker/.";
 import { ValidationStub } from "@/presentation/test";
 import { AuthenticationSpy } from "@/presentation/test/mock-authentication";
