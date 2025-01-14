@@ -1,9 +1,10 @@
 import React from "react";
-import { render, type RenderResult } from "@testing-library/react";
+import { fireEvent, render, type RenderResult } from "@testing-library/react";
 import { Input } from "./input";
 import Context from "@/presentation/contexts/form/form-context";
+import { faker } from "@faker-js/faker";
 
-const makeSut = (): RenderResult => {
+const makeSut = (fieldName: string): RenderResult => {
   const result = render(
     <Context.Provider
       value={{
@@ -18,7 +19,7 @@ const makeSut = (): RenderResult => {
         setState: jest.fn(),
       }}
     >
-      <Input name="field" />
+      <Input name={fieldName} />
     </Context.Provider>,
   );
   return result;
@@ -26,10 +27,19 @@ const makeSut = (): RenderResult => {
 
 describe("Input Component", () => {
   test("Should begin with readOnly", () => {
-    const sut = makeSut();
+    const field = faker.database.column();
+    const sut = makeSut(field);
 
-    const input = sut.getByTestId("field") as HTMLInputElement;
+    const input = sut.getByTestId(field) as HTMLInputElement;
 
     expect(input.readOnly).toBe(true);
+  });
+  test("Should remove readOnly on focus", () => {
+    const field = faker.database.column();
+    const sut = makeSut(field);
+
+    const input = sut.getByTestId(field) as HTMLInputElement;
+    fireEvent.focus(input);
+    expect(input.readOnly).toBe(false);
   });
 });
