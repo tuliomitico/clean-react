@@ -15,6 +15,6 @@ export class HttpPostClientSpy<T, R> implements HttpPostClient<T, R> {
     const { url, body } = params;
     this.url = url;
     this.body = body;
-    return await Promise.resolve(this.response);
+    return this.response;
   }
 }
