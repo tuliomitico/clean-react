@@ -8,7 +8,7 @@
       ],
       "esModuleInterop": true,
       "module": "esnext",
-      "moduleResolution": "node",
+      "moduleResolution": "bundler",
       "jsx": "react-jsx",
       "rootDirs": ["src", "tests"],
       "baseUrl": "src",
