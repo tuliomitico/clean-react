@@ -1,0 +1,6 @@
+language: nodejs
+nodejs:
+  - 20
+script:
+  - eslint 'src/**'
+  - npm run test:ci
