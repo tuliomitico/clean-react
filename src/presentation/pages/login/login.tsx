@@ -10,14 +10,17 @@ import Context from "@/presentation/contexts/form/form-context";
 import type { Validation } from "@/presentation/protocols/validation";
 import type { Authentication } from "@/domain/usecases";
 import { Link, useNavigate } from "react-router-dom";
+import type { SaveAccessToken } from "@/domain/usecases/save-access-token";
 
 type Props = {
-  validation?: Validation;
-  authentication?: Authentication;
+  validation: Validation;
+  authentication: Authentication;
+  saveAccessToken?: SaveAccessToken;
 };
 export function Login({
   validation,
   authentication,
+  saveAccessToken,
 }: PropsWithoutRef<Props>): React.JSX.Element {
   const history = useNavigate();
   const [state, setState] = useState({
@@ -31,8 +34,8 @@ export function Login({
   useEffect(() => {
     setState({
       ...state,
-      emailError: validation?.validate("email", state.email) ?? "",
-      passwordError: validation?.validate("password", state.password) ?? "",
+      emailError: validation.validate("email", state.email) ?? "",
+      passwordError: validation.validate("password", state.password) ?? "",
     });
   }, [state.email, state.password]);
 
@@ -45,11 +48,11 @@ export function Login({
         return;
       }
       setState({ ...state, isLoading: true });
-      const account = await authentication?.auth({
+      const account = await authentication.auth({
         email: state.email,
         password: state.password,
       });
-      localStorage.setItem("accessToken", account?.accessToken ?? "");
+      await saveAccessToken?.save(account?.accessToken ?? "");
       await history("/", { replace: true });
     } catch (error) {
       setState({
