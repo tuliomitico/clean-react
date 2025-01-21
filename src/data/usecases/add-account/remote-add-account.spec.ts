@@ -3,7 +3,7 @@ import { RemoteAddAccount } from "./remote-add-account";
 import { HttpPostClientSpy } from "@/data/test";
 import type { AccountModel } from "@/domain/models";
 import { faker } from "@faker-js/faker";
-import { mockAddAccount } from "@/domain/test";
+import { mockAccountModel, mockAddAccount } from "@/domain/test";
 import { HttpStatusCode } from "@/data/protocols/http";
 import { EmailInUseError } from "@/domain/errors/email-in-use-error";
 import { UnexpectedError } from "@/domain/errors";
@@ -80,14 +80,14 @@ describe("RemoteAddAccount", () => {
     await expect(promise).rejects.toThrow(new UnexpectedError());
   });
 
-  //   test("Should return an AccountModel if HttpPostClient returns 200", async () => {
-  //     const { sut, httpPostClientSpy } = makeSut();
-  //     const httpResult = mockAccountModel();
-  //     httpPostClientSpy.response = {
-  //       statusCode: HttpStatusCode.ok,
-  //       body: httpResult,
-  //     };
-  //     const account = await sut.auth(mockAuthentication());
-  //     expect(account).toEqual(httpResult);
-  //   });
+  test("Should return an AccountModel if HttpPostClient returns 200", async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    const httpResult = mockAccountModel();
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.ok,
+      body: httpResult,
+    };
+    const account = await sut.add(mockAddAccount());
+    expect(account).toEqual(httpResult);
+  });
 });
