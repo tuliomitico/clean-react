@@ -4,6 +4,8 @@ import { HttpPostClientSpy } from "@/data/test";
 import type { AccountModel } from "@/domain/models";
 import { faker } from "@faker-js/faker";
 import { mockAddAccount } from "@/domain/test";
+import { HttpStatusCode } from "@/data/protocols/http";
+import { EmailInUseError } from "@/domain/errors/email-in-use-error";
 
 type SutTypes = {
   sut: RemoteAddAccount;
@@ -35,15 +37,15 @@ describe("RemoteAddAccount", () => {
     await sut.add(addAccountParams);
     expect(httpPostClientSpy.body).toEqual(addAccountParams);
   });
-  //   test("Should throw InvalidCredentialsError if HttpPostClient returns 401", async () => {
-  //     const { sut, httpPostClientSpy } = makeSut();
-  //     httpPostClientSpy.response = {
-  //       statusCode: HttpStatusCode.unauthorized,
-  //     };
-  //     const authenticationParams = mockAuthentication();
-  //     const promise = sut.auth(authenticationParams);
-  //     await expect(promise).rejects.toThrow(new InvalidCredentialsError());
-  //   });
+  test("Should throw EmailInUseError if HttpPostClient returns 403", async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.forbidden,
+    };
+    const addAccountParams = mockAddAccount();
+    const promise = sut.add(addAccountParams);
+    await expect(promise).rejects.toThrow(new EmailInUseError());
+  });
   //   test("Should throw UnexpectedError if HttpPostClient returns 400", async () => {
   //     const { sut, httpPostClientSpy } = makeSut();
   //     httpPostClientSpy.response = {
