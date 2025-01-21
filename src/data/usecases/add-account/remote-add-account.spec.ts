@@ -29,12 +29,12 @@ describe("RemoteAddAccount", () => {
     await sut.add(mockAddAccount());
     expect(httpPostClientSpy.url).toBe(url);
   });
-  //   test("Should call HttpPostClient with correct body", async () => {
-  //     const { sut, httpPostClientSpy } = makeSut();
-  //     const authenticationParams = mockAuthentication();
-  //     await sut.auth(authenticationParams);
-  //     expect(httpPostClientSpy.body).toEqual(authenticationParams);
-  //   });
+  test("Should call HttpPostClient with correct body", async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    const addAccountParams = mockAddAccount();
+    await sut.add(addAccountParams);
+    expect(httpPostClientSpy.body).toEqual(addAccountParams);
+  });
   //   test("Should throw InvalidCredentialsError if HttpPostClient returns 401", async () => {
   //     const { sut, httpPostClientSpy } = makeSut();
   //     httpPostClientSpy.response = {
