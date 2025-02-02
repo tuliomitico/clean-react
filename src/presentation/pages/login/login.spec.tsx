@@ -57,33 +57,13 @@ const makeSut = (params?: SutParams): SutTypes => {
   };
 };
 
-const populateEmailInput = (
-  sut: RenderResult,
-  email = faker.internet.email(),
-): void => {
-  const emailInput = sut.getByTestId("email");
-  fireEvent.input(emailInput, {
-    target: { value: email },
-  });
-};
-
-const populatePasswordInput = (
-  sut: RenderResult,
-  password = faker.internet.password(),
-): void => {
-  const passwordInput = sut.getByTestId("password");
-  fireEvent.input(passwordInput, {
-    target: { value: password },
-  });
-};
-
 const simulateValidSubmit = async (
   sut: RenderResult,
   email = faker.internet.email(),
   password = faker.internet.password(),
 ): Promise<void> => {
-  populateEmailInput(sut, email);
-  populatePasswordInput(sut, password);
+  Helper.populateField(sut, "email", email);
+  Helper.populateField(sut, "password", password);
   const form = sut.getByTestId("form");
   fireEvent.submit(form);
   await waitFor(() => form);
@@ -118,33 +98,33 @@ describe("Login Component", () => {
   test("Should show email error if Validation fails", () => {
     const validationError = faker.lorem.words();
     const { sut } = makeSut({ validationError });
-    populateEmailInput(sut);
+    Helper.populateField(sut, "email");
     Helper.testStatusForField(sut, "email", validationError);
   });
 
   test("Should show password error if Validation fails", () => {
     const validationError = faker.lorem.words();
     const { sut } = makeSut({ validationError });
-    populatePasswordInput(sut);
+    Helper.populateField(sut, "password");
     Helper.testStatusForField(sut, "password", validationError);
   });
 
   test("Should show valid email state if Validation succeds", () => {
     const { sut } = makeSut();
-    populateEmailInput(sut);
+    Helper.populateField(sut, "email");
     Helper.testStatusForField(sut, "email");
   });
 
   test("Should show valid password state if Validation succeds", () => {
     const { sut } = makeSut();
-    populatePasswordInput(sut);
+    Helper.populateField(sut, "password");
     Helper.testStatusForField(sut, "password");
   });
 
   test("Should enable submit button if form is valid", () => {
     const { sut } = makeSut();
-    populateEmailInput(sut);
-    populatePasswordInput(sut);
+    Helper.populateField(sut, "email");
+    Helper.populateField(sut, "password");
     Helper.testButtonIsDisabled(sut, "submit", false);
   });
 

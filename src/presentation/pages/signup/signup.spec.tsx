@@ -1,9 +1,4 @@
-import {
-  cleanup,
-  fireEvent,
-  render,
-  type RenderResult,
-} from "@testing-library/react";
+import { cleanup, render, type RenderResult } from "@testing-library/react";
 import { SignUp } from "./signup";
 import { Helper, ValidationStub } from "@/presentation/test";
 import { faker } from "@faker-js/faker";
@@ -24,17 +19,6 @@ const makeSut = (params?: SutParams): SutTypes => {
   };
 };
 
-const populateField = (
-  sut: RenderResult,
-  fieldName: string,
-  value = faker.lorem.word(),
-): void => {
-  const input = sut.getByTestId(fieldName);
-  fireEvent.input(input, {
-    target: { value },
-  });
-};
-
 describe("SignUp Component", () => {
   afterEach(cleanup);
 
@@ -52,7 +36,7 @@ describe("SignUp Component", () => {
   test("Should show name error if Validation fails", () => {
     const validationError = faker.lorem.words();
     const { sut } = makeSut({ validationError });
-    populateField(sut, "name");
+    Helper.populateField(sut, "name");
     Helper.testStatusForField(sut, "name", validationError);
   });
 });
