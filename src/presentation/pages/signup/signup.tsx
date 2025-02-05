@@ -23,7 +23,7 @@ export function SignUp({
     password: "",
     passwordConfirmation: "",
     nameError: "",
-    emailError: "Campo obrigatório",
+    emailError: "",
     passwordError: "Campo obrigatório",
     passwordConfirmationError: "Campo obrigatório",
     mainError: "",
@@ -33,8 +33,9 @@ export function SignUp({
     setState({
       ...state,
       nameError: validation?.validate("name", state.name) ?? "",
+      emailError: validation?.validate("email", state.email) ?? "",
     });
-  }, [state.email]);
+  }, [state.name, state.email]);
 
   return (
     <div className={Styles.signup}>
