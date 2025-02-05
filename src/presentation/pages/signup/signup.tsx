@@ -67,7 +67,12 @@ export function SignUp({
           />
           <button
             data-testid="submit"
-            disabled
+            disabled={
+              !!state.emailError ||
+              !!state.passwordError ||
+              !!state.nameError ||
+              !!state.passwordConfirmationError
+            }
             className={Styles.submit}
             type="submit"
           >
