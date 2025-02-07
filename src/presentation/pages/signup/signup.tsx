@@ -8,13 +8,16 @@ import {
 } from "@/presentation/components";
 import Context from "@/presentation/contexts/form/form-context";
 import type { Validation } from "@/presentation/protocols/validation";
+import type { AddAccount } from "@/domain/usecases";
 
 type Props = {
   validation?: Validation;
+  addAccount?: AddAccount;
 };
 
 export function SignUp({
   validation,
+  addAccount,
 }: PropsWithoutRef<Props>): React.JSX.Element {
   const [state, setState] = useState({
     isLoading: false,
@@ -43,9 +46,17 @@ export function SignUp({
     });
   }, [state.name, state.email, state.password, state.passwordConfirmation]);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
+  async function handleSubmit(
+    event: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> {
     event.preventDefault();
     setState({ ...state, isLoading: true });
+    await addAccount?.add({
+      name: state.name,
+      email: state.email,
+      password: state.password,
+      passwordConfirmation: state.passwordConfirmation,
+    });
   }
 
   return (
