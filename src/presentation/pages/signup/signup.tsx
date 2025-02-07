@@ -50,6 +50,15 @@ export function SignUp({
     event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
+    if (
+      state.isLoading ||
+      state.emailError ||
+      state.passwordError ||
+      state.nameError ||
+      state.passwordConfirmationError
+    ) {
+      return;
+    }
     setState({ ...state, isLoading: true });
     await addAccount?.add({
       name: state.name,
