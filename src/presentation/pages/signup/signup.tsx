@@ -50,22 +50,30 @@ export function SignUp({
     event: React.FormEvent<HTMLFormElement>,
   ): Promise<void> {
     event.preventDefault();
-    if (
-      state.isLoading ||
-      state.emailError ||
-      state.passwordError ||
-      state.nameError ||
-      state.passwordConfirmationError
-    ) {
-      return;
+    try {
+      if (
+        state.isLoading ||
+        state.emailError ||
+        state.passwordError ||
+        state.nameError ||
+        state.passwordConfirmationError
+      ) {
+        return;
+      }
+      setState({ ...state, isLoading: true });
+      await addAccount?.add({
+        name: state.name,
+        email: state.email,
+        password: state.password,
+        passwordConfirmation: state.passwordConfirmation,
+      });
+    } catch (error) {
+      setState({
+        ...state,
+        isLoading: false,
+        mainError: (error as Error).message,
+      });
     }
-    setState({ ...state, isLoading: true });
-    await addAccount?.add({
-      name: state.name,
-      email: state.email,
-      password: state.password,
-      passwordConfirmation: state.passwordConfirmation,
-    });
   }
 
   return (
