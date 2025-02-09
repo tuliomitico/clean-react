@@ -8,17 +8,21 @@ import {
 } from "@/presentation/components";
 import Context from "@/presentation/contexts/form/form-context";
 import type { Validation } from "@/presentation/protocols/validation";
-import type { AddAccount } from "@/domain/usecases";
+import type { AddAccount, SaveAccessToken } from "@/domain/usecases";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   validation?: Validation;
   addAccount?: AddAccount;
+  saveAccessToken?: SaveAccessToken;
 };
 
 export function SignUp({
   validation,
   addAccount,
+  saveAccessToken,
 }: PropsWithoutRef<Props>): React.JSX.Element {
+  const history = useNavigate();
   const [state, setState] = useState({
     isLoading: false,
     name: "",
@@ -61,12 +65,14 @@ export function SignUp({
         return;
       }
       setState({ ...state, isLoading: true });
-      await addAccount?.add({
+      const account = await addAccount?.add({
         name: state.name,
         email: state.email,
         password: state.password,
         passwordConfirmation: state.passwordConfirmation,
       });
+      await saveAccessToken?.save(account?.accessToken ?? "");
+      await history("/", { replace: true });
     } catch (error) {
       setState({
         ...state,
