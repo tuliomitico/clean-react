@@ -5,29 +5,54 @@ import {
   waitFor,
   type RenderResult,
 } from "@testing-library/react";
+import {
+  unstable_HistoryRouter as HistoryRouter,
+  type HistoryRouterProps,
+} from "react-router-dom";
+import { createMemoryHistory } from "history";
 import { SignUp } from "./signup";
-import { Helper, ValidationStub, AddAccountSpy } from "@/presentation/test";
+import {
+  Helper,
+  SaveAccessTokenMock,
+  ValidationStub,
+  AddAccountSpy,
+} from "@/presentation/test";
 import { faker } from "@faker-js/faker";
 import { EmailInUseError } from "@/domain/errors";
 
 type SutTypes = {
   sut: RenderResult;
   addAccountSpy: AddAccountSpy;
+  saveAccessTokenMock: SaveAccessTokenMock;
 };
 
 type SutParams = {
   validationError: string;
 };
+
+const initialEntries = ["/signup", ""];
+const history = createMemoryHistory({ initialEntries });
+
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
   validationStub.errorMessage = params?.validationError ?? "";
   const addAccountSpy = new AddAccountSpy();
+  const saveAccessTokenMock = new SaveAccessTokenMock();
   const sut = render(
-    <SignUp validation={validationStub} addAccount={addAccountSpy} />,
+    <HistoryRouter
+      history={history as unknown as HistoryRouterProps["history"]}
+    >
+      <SignUp
+        validation={validationStub}
+        addAccount={addAccountSpy}
+        saveAccessToken={saveAccessTokenMock}
+      />
+    </HistoryRouter>,
   );
   return {
     sut,
     addAccountSpy,
+    saveAccessTokenMock,
   };
 };
 
@@ -162,5 +187,16 @@ describe("SignUp Component", () => {
     await simulateValidSubmit(sut);
     Helper.testElementText(sut, "main-error", error.message);
     Helper.testChildCount(sut, "error-wrap", 1);
+  });
+
+  test("Should call SaveAccessToken on success", async () => {
+    const { sut, addAccountSpy, saveAccessTokenMock } = makeSut();
+    await simulateValidSubmit(sut);
+
+    expect(saveAccessTokenMock.accessToken).toBe(
+      addAccountSpy.account.accessToken,
+    );
+    expect(initialEntries.length).toBe(2);
+    expect(history.location.pathname).toBe("/");
   });
 });
