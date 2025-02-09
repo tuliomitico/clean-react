@@ -92,7 +92,7 @@ export function Login({
           >
             Entrar
           </button>
-          <Link data-testid="signup" to="/signup" className={Styles.link}>
+          <Link data-testid="signup-link" to="/signup" className={Styles.link}>
             Criar conta
           </Link>
           <FormStatus />
