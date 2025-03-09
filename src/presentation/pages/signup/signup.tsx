@@ -5,6 +5,7 @@ import {
   Footer,
   Input,
   FormStatus,
+  SubmitButton,
 } from "@/presentation/components";
 import Context from "@/presentation/contexts/form/form-context";
 import type { Validation } from "@/presentation/protocols/validation";
@@ -25,6 +26,7 @@ export function SignUp({
   const history = useNavigate();
   const [state, setState] = useState({
     isLoading: false,
+    isFormInvalid: true,
     name: "",
     email: "",
     password: "",
@@ -37,16 +39,26 @@ export function SignUp({
   });
 
   useEffect(() => {
+    const nameError = validation?.validate("name", state.name) ?? "";
+    const emailError = validation?.validate("email", state.email) ?? "";
+    const passwordError =
+      validation?.validate("password", state.password) ?? "";
+    const passwordConfirmationError =
+      validation?.validate(
+        "passwordConfirmation",
+        state.passwordConfirmation,
+      ) ?? "";
     setState({
       ...state,
-      nameError: validation?.validate("name", state.name) ?? "",
-      emailError: validation?.validate("email", state.email) ?? "",
-      passwordError: validation?.validate("password", state.password) ?? "",
-      passwordConfirmationError:
-        validation?.validate(
-          "passwordConfirmation",
-          state.passwordConfirmation,
-        ) ?? "",
+      nameError,
+      emailError,
+      passwordError,
+      passwordConfirmationError,
+      isFormInvalid:
+        !!emailError ||
+        !!passwordError ||
+        !!nameError ||
+        !!passwordConfirmationError,
     });
   }, [state.name, state.email, state.password, state.passwordConfirmation]);
 
@@ -55,13 +67,7 @@ export function SignUp({
   ): Promise<void> {
     event.preventDefault();
     try {
-      if (
-        state.isLoading ||
-        state.emailError ||
-        state.passwordError ||
-        state.nameError ||
-        state.passwordConfirmationError
-      ) {
+      if (state.isLoading || state.isFormInvalid) {
         return;
       }
       setState({ ...state, isLoading: true });
@@ -108,19 +114,7 @@ export function SignUp({
             name="passwordConfirmation"
             placeholder="Repita sua senha"
           />
-          <button
-            data-testid="submit"
-            disabled={
-              !!state.emailError ||
-              !!state.passwordError ||
-              !!state.nameError ||
-              !!state.passwordConfirmationError
-            }
-            className={Styles.submit}
-            type="submit"
-          >
-            Entrar
-          </button>
+          <SubmitButton text="Cadastrar" />
           <Link
             data-testid="login-link"
             replace

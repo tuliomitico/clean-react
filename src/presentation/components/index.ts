@@ -4,4 +4,5 @@ export * from "./input/input";
 export * from "./login-header/login-header";
 export * from "./logo/logo";
 export * from "./spinner/spinner";
+export * from "./submit-button/submit-button";
 export * from "./router/router";
