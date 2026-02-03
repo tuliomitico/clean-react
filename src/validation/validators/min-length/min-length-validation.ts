@@ -6,7 +6,13 @@ export class MinLengthValidation implements FieldValidation {
     readonly field: string,
     private readonly minLength: number,
   ) {}
-  validate(value: string): Error | null {
-    return value.length >= this.minLength ? null : new InvalidFieldError();
+  validate(input: Partial<Record<string, string>>): Error | null {
+    const { [this.field]: value } = input;
+
+    if (!value) {
+      return null;
+    }
+
+    return value.length < this.minLength ? new InvalidFieldError() : null;
   }
 }
