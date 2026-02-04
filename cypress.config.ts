@@ -10,7 +10,7 @@ export default defineConfig({
   },
   e2e: {
     baseUrl: "http://localhost:5173",
-    supportFile: false,
+    supportFile: "src/main/test/cypress/support/index.js",
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
