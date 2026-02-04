@@ -5,7 +5,6 @@ import reactPlugin from "eslint-plugin-react";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
-  { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
   love,
   reactPlugin.configs.flat.recommended,
   pluginCypress.configs.recommended,
@@ -41,5 +40,16 @@ export default [
       "*.scss",
       "*.json"
     ],
-  },
+
+
+
+  }, {
+    files: ['**/*.js'],
+    rules: {
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+    }
+  }
 ];
