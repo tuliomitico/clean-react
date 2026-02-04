@@ -26,15 +26,10 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "strictNullChecks": true,
-    "types": [
-      "cypress",
-      "node"
-    ]
   },
   "include": [
     "src",
     "tests",
-    "cypress.config.ts"
   ],
   "exclude": [
     "tests/e2e/cypress",
