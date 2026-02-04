@@ -1,5 +1,6 @@
 import love from "eslint-config-love";
 import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
+import pluginCypress from 'eslint-plugin-cypress';
 import reactPlugin from "eslint-plugin-react";
 
 /** @type {import('eslint').Linter.Config[]} */
@@ -7,6 +8,7 @@ export default [
   { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },
   love,
   reactPlugin.configs.flat.recommended,
+  pluginCypress.configs.recommended,
   eslintPluginPrettier,
   {
     settings: {
@@ -37,6 +39,7 @@ export default [
       ".vscode",
       "public",
       "*.scss",
+      "*.json"
     ],
   },
 ];
