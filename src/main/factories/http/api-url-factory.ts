@@ -1,3 +1,3 @@
 export const makeApiUrl = (path: string): string => {
-  return `${import.meta.env.API_URL}${path}`;
+  return `${import.meta.env.VITE_API_URL}${path}`;
 };
