@@ -82,8 +82,8 @@ describe("Login", () => {
         accessToken: faker.string.uuid()
       }
     })
-    cy.getByTestId('email').focus().type("mango@gmail.com")
-    cy.getByTestId('password').focus().type("12345")
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.string.alphanumeric(5))
     cy.getByTestId("submit").click()
 
     cy.getByTestId('main-error').should('not.exist')
@@ -99,8 +99,8 @@ describe("Login", () => {
         invalidProperty: faker.string.uuid(),
       }
     })
-    cy.getByTestId('email').focus().type("mango@gmail.com")
-    cy.getByTestId('password').focus().type("12345")
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.string.alphanumeric(5))
     cy.getByTestId("submit").click()
 
     cy.getByTestId('spinner').should('not.exist')
