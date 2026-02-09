@@ -59,12 +59,18 @@ describe("Login", () => {
       .getByTestId('main-error').should('not.exist')
       .getByTestId('spinner').should('not.exist')
       .getByTestId('main-error').should('contain.text', 'Credenciais inválidas');
+  it("Should present UnexpectedError on any other errors", () => {
     cy.intercept('POST', /login/, {
       statusCode: faker.helpers.arrayElement([400, 500, 404]),
       body: {
         error: faker.lorem.words()
       }
     })
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.string.alphanumeric(5))
+    cy.getByTestId("submit").click()
+    cy.getByTestId('spinner').should('not.exist')
+    cy.getByTestId('main-error').should('contain.text', 'Algo de errado aconteceu.');
     cy.url().should("eq", `${baseUrl}/login`);
   });
 
@@ -78,10 +84,9 @@ describe("Login", () => {
     cy.getByTestId('email').focus().type("mango@gmail.com")
     cy.getByTestId('password').focus().type("12345")
     cy.getByTestId("submit").click()
-    cy.getByTestId("error-wrap")
-      .getByTestId('spinner').should("exist")
-      .getByTestId('main-error').should('not.exist')
-      .getByTestId('spinner').should('not.exist')
+
+    cy.getByTestId('main-error').should('not.exist')
+    cy.getByTestId('spinner').should('not.exist')
     cy.url().should("eq", `${baseUrl}/`);
     cy.window().then(window => assert.isOk(window.localStorage.getItem('accessToken')))
   });
