@@ -100,8 +100,8 @@ describe("Login", () => {
       }
     })
     cy.getByTestId('email').focus().type(faker.internet.email())
-    cy.getByTestId('password').focus().type(faker.string.alphanumeric(5))
-    cy.getByTestId("submit").click()
+    cy.getByTestId('password').focus().type(faker.string.alphanumeric(5)).type('{enter}')
+    // cy.getByTestId("submit").click()
 
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('contain.text', 'Algo de errado aconteceu.');
