@@ -107,4 +107,17 @@ describe("Login", () => {
     cy.getByTestId('main-error').should('contain.text', 'Algo de errado aconteceu.');
     cy.url().should("eq", `${baseUrl}/login`);
   });
+
+  it("Should prevent multiple submits", () => {
+    cy.intercept('POST', /login/, {
+      statusCode: 200,
+      body: {
+        accessToken: faker.string.uuid(),
+      }
+    }).as('request')
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.string.alphanumeric(5))
+    cy.getByTestId("submit").dblclick()
+    cy.get('@request.all').should('have.length', 1)
+  });
 });
