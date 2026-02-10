@@ -32,13 +32,21 @@ export function Login({
     emailError: "",
     passwordError: "",
     mainError: "",
+  } as {
+    isLoading: boolean
+    isFormInvalid: boolean
+    email: string
+    password: string
+    emailError: string | null | undefined
+    passwordError: string | null | undefined
+    mainError: string
   });
 
   useEffect(() => {
     const { email, password } = state;
     const formData = { email, password };
-    const emailError = validation.validate("email", formData) ?? "";
-    const passwordError = validation.validate("password", formData) ?? "";
+    const emailError = validation.validate("email", formData);
+    const passwordError = validation.validate("password", formData);
     setState({
       ...state,
       emailError,

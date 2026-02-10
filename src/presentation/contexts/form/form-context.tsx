@@ -8,9 +8,9 @@ export default createContext<{
     email: string;
     password: string;
     passwordConfirmation?: string;
-    nameError?: string;
-    emailError: string;
-    passwordError: string;
+    nameError?: string | null;
+    emailError?: string | null;
+    passwordError?: string | null;
     passwordConfirmationError?: string;
     mainError: string;
   };
@@ -21,9 +21,9 @@ export default createContext<{
       email: string;
       password: string;
       passwordConfirmation?: string;
-      nameError?: string;
-      emailError: string;
-      passwordError: string;
+      nameError?: string | null;
+      emailError?: string | null;
+      passwordError?: string | null;
       passwordConfirmationError?: string;
       mainError: string;
     }>
