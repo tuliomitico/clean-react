@@ -33,10 +33,15 @@ export function Input(props: PropsWithoutRef<Props>): React.JSX.Element {
   const { [`${name}Error` as "emailError" | "passwordError"]: error } = state;
 
   return (
-    <div className={Styles.inputWrap}>
+    <div
+      data-testid={`${props.name}-wrap`}
+      className={Styles.inputWrap}
+      data-status={error ? 'invalid' : 'valid'}
+    >
       <input
         {...props}
         ref={inputRef}
+        title={error}
         placeholder=" "
         data-testid={props.name}
         readOnly
@@ -44,15 +49,9 @@ export function Input(props: PropsWithoutRef<Props>): React.JSX.Element {
         onChange={e => setState({ ...state, [e.target.name]: e.target.value })}
       />
       <label
+        data-testid={`${props.name}-label`}
+        title={error}
         onClick={() => inputRef.current?.focus()}>{props.placeholder}</label>
-      <span
-        data-testid={`${props.name}-status`}
-        title={error || "Tudo certo!"}
-
-        className={Styles.status}
-      >
-        {error ? "🔴" : "🟢"}
-      </span>
     </div>
   );
 }
