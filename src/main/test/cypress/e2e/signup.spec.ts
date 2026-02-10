@@ -26,7 +26,7 @@ describe("SignUp", () => {
   });
 
   it("Should present error state if form is invalid", () => {
-    cy.getByTestId('name').focus().type(faker.lorem.word())
+    cy.getByTestId('name').focus().type(faker.string.alphanumeric(3))
     FormHelper.testInputStatus('name', 'Valor inválido')
 
     cy.getByTestId('email').focus().type(faker.lorem.word())
@@ -35,7 +35,7 @@ describe("SignUp", () => {
     cy.getByTestId('password').focus().type(faker.string.alphanumeric(4))
     FormHelper.testInputStatus('password', 'Valor inválido')
 
-    cy.getByTestId('passwordConfirmation').focus().type(faker.string.alphanumeric(4))
+    cy.getByTestId('passwordConfirmation').focus().type(faker.string.alphanumeric(3))
     FormHelper.testInputStatus('passwordConfirmation', 'Valor inválido')
 
     cy.getByTestId("submit").should("have.attr", "disabled");
