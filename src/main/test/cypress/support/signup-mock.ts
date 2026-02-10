@@ -9,3 +9,6 @@ export const mockEmailInUseError = (): void => {
   Helper.mockEmailInUseError(/signup/)
 }
 
+export const mockInvalidData = (): void => {
+  Helper.mockOk(/signup/, 'POST', { invalid: faker.string.uuid() })
+}

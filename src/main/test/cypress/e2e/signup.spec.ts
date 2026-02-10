@@ -99,7 +99,7 @@ describe("SignUp", () => {
 
     cy.getByTestId('spinner').should('not.exist')
     cy.getByTestId('main-error').should('contain.text', 'Algo de errado aconteceu.');
-    FormHelper.testUrl('/login')
+    FormHelper.testUrl('/signup')
   });
 
   it("Should prevent multiple submits", () => {
