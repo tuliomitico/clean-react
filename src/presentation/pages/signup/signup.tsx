@@ -31,21 +31,21 @@ export function SignUp({
     email: "",
     password: "",
     passwordConfirmation: "",
-    nameError: "",
-    emailError: "",
-    passwordError: "",
-    passwordConfirmationError: "",
+    nameError: "" as string | null | undefined,
+    emailError: "" as string | null | undefined,
+    passwordError: "" as string | null | undefined,
+    passwordConfirmationError: "" as string | null | undefined,
     mainError: "",
   });
 
   useEffect(() => {
     const { name, email, password, passwordConfirmation } = state;
     const formData = { name, email, password, passwordConfirmation };
-    const nameError = validation?.validate("name", formData) ?? "";
-    const emailError = validation?.validate("email", formData) ?? "";
-    const passwordError = validation?.validate("password", formData) ?? "";
+    const nameError = validation?.validate("name", formData);
+    const emailError = validation?.validate("email", formData);
+    const passwordError = validation?.validate("password", formData);
     const passwordConfirmationError =
-      validation?.validate("passwordConfirmation", formData) ?? "";
+      validation?.validate("passwordConfirmation", formData);
     setState({
       ...state,
       nameError,

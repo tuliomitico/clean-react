@@ -1,10 +1,13 @@
 import { faker } from '@faker-js/faker';
 import * as FormHelper from '../support/form-helper';
-import * as Http from '../support/login-mock';
+import * as Http from '../support/signup-mock';
 
 const simulateValidSubmit = (): void => {
+  cy.getByTestId('name').focus().type(faker.name.fullName())
   cy.getByTestId('email').focus().type(faker.internet.email())
-  cy.getByTestId('password').focus().type(faker.string.alphanumeric(5))
+  const password = faker.string.alphanumeric(7)
+  cy.getByTestId('password').focus().type(password)
+  cy.getByTestId('passwordConfirmation').focus().type(password)
   cy.getByTestId('submit').click()
 }
 
@@ -63,11 +66,11 @@ describe("SignUp", () => {
     cy.getByTestId("error-wrap").should("not.have.descendants");
   });
 
-  it("Should present InvalidCredentialsError on 401", () => {
-    Http.mockInvalidCredentialsError()
+  it("Should present EmailInUseError on 403", () => {
+    Http.mockEmailInUseError()
     simulateValidSubmit()
-    FormHelper.testMainError('Credenciais inválidas')
-    FormHelper.testUrl('/login')
+    FormHelper.testMainError('Esse e-mail já está em uso.')
+    FormHelper.testUrl('/signup')
   });
 
   it("Should present UnexpectedError on any other errors", () => {

@@ -11,7 +11,7 @@ export default createContext<{
     nameError?: string | null;
     emailError?: string | null;
     passwordError?: string | null;
-    passwordConfirmationError?: string;
+    passwordConfirmationError?: string | null;
     mainError: string;
   };
   setState: React.Dispatch<
@@ -24,7 +24,7 @@ export default createContext<{
       nameError?: string | null;
       emailError?: string | null;
       passwordError?: string | null;
-      passwordConfirmationError?: string;
+      passwordConfirmationError?: string | null;
       mainError: string;
     }>
   >;
