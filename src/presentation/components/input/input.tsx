@@ -32,8 +32,6 @@ export function Input(props: PropsWithoutRef<Props>): React.JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null)
   const { [`${name}Error` as "emailError" | "passwordError"]: error } = state;
 
-  console.log(error);
-
   return (
     <div
       data-testid={`${props.name}-wrap`}
