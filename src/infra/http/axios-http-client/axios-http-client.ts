@@ -7,10 +7,8 @@ import type {
 } from "@/data/protocols/http";
 import axios, { type AxiosError, type AxiosResponse } from "axios";
 
-export class AxiosHttpClient implements HttpPostClient<unknown, any> {
-  post = async (
-    params: HttpPostParams<unknown>,
-  ): Promise<HttpResponse<any> | undefined> => {
+export class AxiosHttpClient implements HttpPostClient {
+  post = async (params: HttpPostParams): Promise<HttpResponse | undefined> => {
     // eslint-disable-next-line @typescript-eslint/init-declarations -- passar no commit
     let httpResponse: AxiosResponse;
     try {

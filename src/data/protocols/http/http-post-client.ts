@@ -1,10 +1,10 @@
 import type { HttpResponse } from ".";
 
-export type HttpPostParams<T> = {
+export type HttpPostParams = {
   url: string;
-  body?: T;
+  body?: any;
 };
 
-export interface HttpPostClient<T, R> {
-  post: (params: HttpPostParams<T>) => Promise<HttpResponse<R> | undefined>;
+export interface HttpPostClient<R = any> {
+  post: (params: HttpPostParams) => Promise<HttpResponse<R> | undefined>;
 }
