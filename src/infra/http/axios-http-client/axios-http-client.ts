@@ -26,7 +26,14 @@ export class AxiosHttpClient implements HttpPostClient, HttpGetClient {
   };
   get = async (params: HttpGetParams): Promise<HttpResponse> => {
     // eslint-disable-next-line @typescript-eslint/init-declarations -- passar no commit
-    const axiosResponse = await axios.get(params.url);
+    let axiosResponse: AxiosResponse;
+
+    try {
+      axiosResponse = await axios.get(params.url);
+    } catch (error) {
+      const { response } = error as AxiosError;
+      axiosResponse = response as AxiosResponse;
+    }
 
     return {
       statusCode: axiosResponse.status,
