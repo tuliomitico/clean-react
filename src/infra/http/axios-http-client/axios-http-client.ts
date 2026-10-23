@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment -- passar no commit*/
 /* eslint-disable @typescript-eslint/no-explicit-any -- passar no commit */
 import type {
+  HttpGetParams,
   HttpPostClient,
   HttpPostParams,
   HttpResponse,
@@ -21,5 +22,9 @@ export class AxiosHttpClient implements HttpPostClient {
       statusCode: axiosResponse.status,
       body: axiosResponse.data,
     };
+  };
+  get = async (params: HttpGetParams): Promise<void> => {
+    // eslint-disable-next-line @typescript-eslint/init-declarations -- passar no commit
+    await axios.get(params.url);
   };
 }
