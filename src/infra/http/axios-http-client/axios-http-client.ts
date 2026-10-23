@@ -19,11 +19,10 @@ export class AxiosHttpClient implements HttpPostClient, HttpGetClient {
       const { response } = error as AxiosError;
       axiosResponse = response as AxiosResponse;
     }
-    return {
-      statusCode: axiosResponse.status,
-      body: axiosResponse.data,
-    };
+
+    return this.adapt(axiosResponse);
   };
+
   get = async (params: HttpGetParams): Promise<HttpResponse> => {
     // eslint-disable-next-line @typescript-eslint/init-declarations -- passar no commit
     let axiosResponse: AxiosResponse;
@@ -35,9 +34,13 @@ export class AxiosHttpClient implements HttpPostClient, HttpGetClient {
       axiosResponse = response as AxiosResponse;
     }
 
+    return this.adapt(axiosResponse);
+  };
+
+  private adapt(axiosResponse: AxiosResponse): HttpResponse {
     return {
       statusCode: axiosResponse.status,
       body: axiosResponse.data,
     };
-  };
+  }
 }
