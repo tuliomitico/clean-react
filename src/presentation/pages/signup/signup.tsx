@@ -44,8 +44,10 @@ export function SignUp({
     const nameError = validation?.validate("name", formData);
     const emailError = validation?.validate("email", formData);
     const passwordError = validation?.validate("password", formData);
-    const passwordConfirmationError =
-      validation?.validate("passwordConfirmation", formData);
+    const passwordConfirmationError = validation?.validate(
+      "passwordConfirmation",
+      formData,
+    );
     setState({
       ...state,
       nameError,
@@ -87,7 +89,7 @@ export function SignUp({
   }
 
   return (
-    <div className={Styles.signup}>
+    <div className={Styles.signupWrap}>
       <LoginHeader />
       <Context.Provider value={{ state, setState }}>
         <form

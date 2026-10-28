@@ -18,6 +18,7 @@ type Props = {
   authentication: Authentication;
   saveAccessToken?: SaveAccessToken;
 };
+
 export function Login({
   validation,
   authentication,
@@ -33,13 +34,13 @@ export function Login({
     passwordError: "",
     mainError: "",
   } as {
-    isLoading: boolean
-    isFormInvalid: boolean
-    email: string
-    password: string
-    emailError: string | null | undefined
-    passwordError: string | null | undefined
-    mainError: string
+    isLoading: boolean;
+    isFormInvalid: boolean;
+    email: string;
+    password: string;
+    emailError: string | null | undefined;
+    passwordError: string | null | undefined;
+    mainError: string;
   });
 
   useEffect(() => {
@@ -80,7 +81,7 @@ export function Login({
   };
 
   return (
-    <div className={Styles.login}>
+    <div className={Styles.loginWrap}>
       <LoginHeader />
       <Context.Provider value={{ state, setState }}>
         <form
