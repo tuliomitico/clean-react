@@ -6,7 +6,7 @@ type Props = React.HTMLAttributes<HTMLElement>;
 
 function LoginHeaderComponent(props: Props): React.JSX.Element {
   return (
-    <header className={Styles.header}>
+    <header className={Styles.headerWrap}>
       <Logo />
       <h1>4Dev - Enquetes para Programadores</h1>
     </header>
